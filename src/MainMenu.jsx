@@ -1,9 +1,10 @@
-import { OrbitControls, CameraControls, PerspectiveCamera, Hud, Text, Html, ContactShadows, PresentationControls, Float, Environment, useGLTF } from '@react-three/drei'
+import { OrbitControls, CameraControls, PerspectiveCamera, useTexture, Hud, Text, Html, ContactShadows, PresentationControls, Float, Environment, useGLTF } from '@react-three/drei'
 import { useLoader, useFrame, useThree } from '@react-three/fiber'
 import {TextureLoader } from 'three/src/loaders/TextureLoader'
 import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three';
 import HowToPlay from './HowToPlay';
+import AboutMe from './AboutMe';
 
 
 export default function MainMenu() {
@@ -14,8 +15,11 @@ export default function MainMenu() {
     const { width, height } = useThree(state => state.viewport);
     const { viewport } = useThree();
 
-    //const gradientMap = useLoader(TextureLoader, './gradientMaps/threeTone.jpg')
-    const stars = new TextureLoader().load("./textures/persona5_stars_large.jpg")
+    const [stars, linkedIn, gitHub] = useTexture([
+        './textures/persona5_stars_large.jpg',
+        './textures/linkedIn.jpg',
+        './textures/GitHub.jpg'
+    ])
 
     const coords = new THREE.Vector3(-30,5,10)
 
@@ -35,7 +39,9 @@ export default function MainMenu() {
     const selectionRef= useRef();
     const cameraControlsRef = useRef();
 
+    const [playGameClick, setPlayGameClick] = useState(false);
     const [howToPlayClick, setHowToPlayClick] = useState(false);
+    const [aboutMeClick, setAboutMeClick] = useState(false);
 
     useFrame((state, delta) => {
         const look = new THREE.Vector3(-20,10,-9)
@@ -106,12 +112,23 @@ export default function MainMenu() {
     }
 
     const howToPlayClickEvent = () => {
-        setHowToPlayClick(true);
+        if (!playGameClick && !howToPlayClick && !aboutMeClick) {
+            setHowToPlayClick(true);
+        }
     }
 
     const howToPlayClickOff = () => {
         setHowToPlayClick(false);
-        console.log("test")
+    }
+
+    const aboutMeClickEvent = () => {
+        if (!playGameClick && !howToPlayClick && !aboutMeClick) {
+            setAboutMeClick(true);
+        }
+    }
+
+    const aboutMeClickOff = () => {
+        setAboutMeClick(false);
     }
 
     const selectClick = () => {
@@ -261,6 +278,7 @@ export default function MainMenu() {
                 <mesh
                     position={[ menuPositions.about[0], menuPositions.about[1], menuPositions.about[2],]}
                     onPointerMove={aboutMeHover}
+                    onClick={aboutMeClickEvent}
                 >
                     <Text
                         font="./fonts/Expose-Regular.otf"
@@ -317,6 +335,13 @@ export default function MainMenu() {
             
         {howToPlayClick ? (
                 <HowToPlay stars={stars} terminate={howToPlayClickOff}/>
+            ) : (
+                null
+            )
+        }
+
+        {aboutMeClick ? (
+                <AboutMe stars={stars} terminate={aboutMeClickOff} linkedIn={linkedIn} gitHub={gitHub}/>
             ) : (
                 null
             )

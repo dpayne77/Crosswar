@@ -3,7 +3,7 @@ import { useFrame, useThree } from '@react-three/fiber'
 import { useRef, useState } from 'react'
 import * as THREE from 'three';
 
-export default function HowToPlay(props)
+export default function AboutMe(props)
 {
     const { camera, viewport } = useThree()
   
@@ -15,6 +15,8 @@ export default function HowToPlay(props)
     const OKref = useRef();
     const whiteRef= useRef();
     const redRef = useRef();
+    const linkedInRef = useRef();
+    const gitHubRef = useRef();
 
     const [clickOkay, setClickOkay] = useState(false)
 
@@ -22,15 +24,15 @@ export default function HowToPlay(props)
   
     useFrame(() => {
         
-        const vec = new THREE.Vector3(0,0.5,0);
+        const vec = new THREE.Vector3(0,1.2,0);
 
         if (!clickOkay) {
             text.current.position.lerp(vec, 0.1);
 
-            vec.set(0,0.5,-0.5)
+            vec.set(0,1.2,-0.5)
             redBg.current.position.lerp(vec,0.13)
 
-            vec.set(0,0.5,-1)
+            vec.set(0,1.2,-1)
             whiteBg.current.position.lerp(vec,0.15)
 
             vec.set(12, 0, -5)
@@ -39,11 +41,17 @@ export default function HowToPlay(props)
             vec.set(11, 0, -6)
             starsRefBG.current.position.lerp(vec,0.16)
 
-            vec.set(1,-1.75,5.1)
+            vec.set(1,-0.75,5.1)
             OKref.current.position.lerp(vec, 0.2)
 
-            vec.set(1,-1.8,5)
+            vec.set(1,-0.8,5)
             whiteRef.current.position.lerp(vec, 0.2)
+
+            vec.set(-0.5, -1.5, 5.1)
+            linkedInRef.current.position.lerp(vec, 0.1)
+
+            vec.set(0.5, -1.5, 5.1)
+            gitHubRef.current.position.lerp(vec, 0.08)
 
             starsRef.current.rotation.z += 0.0005
         }
@@ -72,6 +80,12 @@ export default function HowToPlay(props)
             vec.set(10,-1.8, 4.8)
             redRef.current.position.lerp(vec, 0.2)
 
+            vec.set(-0.5, -10, 5.1)
+            linkedInRef.current.position.lerp(vec, 0.2)
+
+            vec.set(0.5, -12.5, 5.1)
+            gitHubRef.current.position.lerp(vec, 0.1)
+
             starsRef.current.rotation.z -= 0.0005
 
             if (starsRef.current.position.x >= 45) {
@@ -79,11 +93,14 @@ export default function HowToPlay(props)
             }
         }
 
+        linkedInRef.current.rotation.y += 0.04
+        gitHubRef.current.rotation.y += 0.04
+
     });
 
     const okHoverEvent = () => {
         console.log("HOVER")
-        const vec = new THREE.Vector3(1,-1.85,4.9)
+        const vec = new THREE.Vector3(1,-0.8,4.9)
         redRef.current.position.copy(vec)
     }
 
@@ -91,6 +108,14 @@ export default function HowToPlay(props)
 
         setClickOkay(true);
 
+    }
+
+    const linkedInClick = () => {
+        window.open("https://www.linkedin.com/in/paynedavidl/")
+    }
+
+    const gitHubClick = () => {
+        window.open("https://www.github.com/dpayne77/")
     }
 
     return <>
@@ -107,7 +132,7 @@ export default function HowToPlay(props)
                 style={{
                     backgroundColor: 'black',
                     width: viewport.width * 25,
-                    height: '250px',
+                    height: '200px',
                     maxWidth: '330px',
                     overflowY: 'auto',
                     overflowX: 'hidden',
@@ -117,34 +142,24 @@ export default function HowToPlay(props)
                     fontSize: "13px"
                 }}>
                     <p style={{margin: "4px 10px"}}>
-                        How to Play: WIP
-                        eaf
-                        aef
-                        awfe
-                        awef
-                        awef
-                        awef
-                        awef
-                        awef
-                        awfeawef
-                        awef
-                        awfewaef
-                        wefa
-                        fawe
-                        awfe
-                        aw
-                        eaw
-                        faw
-                        ef
-                        awe
-                        faw
-                        ef
-                        awe
-                        Lorem ipsum dolor sit amet. Et rerum dicta ut porro Quis est excepturi quibusdam et aperiam delectus ab doloribus atque qui impedit iure. Sed odit nobis sit soluta quaerat aut fuga vero non corporis cumque! Hic voluptatem facere hic minus iusto et quos quasi ut iusto vero qui esse eveniet!
-
-Nam perferendis reiciendis in pariatur vitae non rerum tenetur ut obcaecati necessitatibus ut sunt assumenda et possimus Quis? Ut nisi similique nam illum neque ut officia quasi est facere sint nam enim minima. Hic illo deserunt id rerum porro et reprehenderit pariatur qui beatae sint sed fuga praesentium.
-
-Et quisquam pariatur non eius odio ut aperiam dolorem ad animi galisum! Sit dignissimos nihil est minima laboriosam ut totam laudantium. Eos iure eius et repellendus fugiat id temporibus voluptates et explicabo voluptatem aut dolores dolor. Sit voluptatem eaque non galisum nulla et vitae voluptatem eum quam officiis quo molestiae quibusdam.
+                        Hey there!
+                    </p>
+                    <p style={{margin: "4px 10px"}}>
+                        Thanks for checking out <a style={{color: "red"}}>CrossWar</a>!!
+                    </p>
+                    <p style={{margin: "4px 10px"}}>
+                        <a style={{color: "red"}}>CrossWar</a> is a passion project that I've been working on for a while. 
+                        I wanted to make a website where I could compete with all my friends in solving mini crosswords. 
+                        I hope you can have some fun with it too!
+                    </p>
+                    <p style={{margin: "4px 10px"}}>
+                        My name is <a style={{color: "red"}}>David Payne</a>, and I am a computer science major from the University of Florida!
+                    </p>
+                    <p style={{margin: "4px 10px"}}>
+                        You can check out my LinkedIn and GitHub with the icons below.
+                    </p>
+                    <p style={{margin: "4px 10px"}}>
+                        Also, special thanks to <a style={{color: "red"}}>Cecilia Durst</a>, <a style={{color: "red"}}>C.J. Annunziato</a>, and <a style={{color: "red"}}>Nathan Gilman</a> for their help with Crosswar!
                     </p>
                 </div>
             </Html>
@@ -156,7 +171,7 @@ Et quisquam pariatur non eius odio ut aperiam dolorem ad animi galisum! Sit dign
                 style={{
                     backgroundColor: 'red',
                     width: viewport.width * 25,
-                    height: '250px',
+                    height: '200px',
                     maxWidth: '330px',
                     padding: '5px'
                 }}>
@@ -170,7 +185,7 @@ Et quisquam pariatur non eius odio ut aperiam dolorem ad animi galisum! Sit dign
                 style={{
                     backgroundColor: 'white',
                     width: viewport.width * 25,
-                    height: '250px',
+                    height: '200px',
                     maxWidth: '330px',
                     padding: '5px'
                 }}>
@@ -215,6 +230,30 @@ Et quisquam pariatur non eius odio ut aperiam dolorem ad animi galisum! Sit dign
             </Text>
         </mesh>
         </group>
+
+        <Float
+            rotationIntensity={0.1}
+            floatIntensity={0.1}
+            speed={10}
+        >
+            <mesh position={[-0.5, -10.5, 5.1]} scale={[0.4, 0.4, 0.4]} onClick={linkedInClick} ref={linkedInRef}>
+                    <boxGeometry/>
+                    <meshBasicMaterial map={props.linkedIn}/>
+            </mesh>
+        </Float>
+
+        <Float
+            rotationIntensity={0.12}
+            floatIntensity={0.08}
+            speed={10}
+        >
+            <mesh position={[0.5, -12.5, 5.1]} scale={[0.4, 0.4, 0.4]} onClick={gitHubClick} ref={gitHubRef}>
+                    <boxGeometry/>
+                    <meshBasicMaterial map={props.gitHub}/>
+            </mesh>
+        </Float>
+
+
         
 
       <ambientLight intensity={1} />
