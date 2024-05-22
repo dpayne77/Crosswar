@@ -1,4 +1,4 @@
-import { OrbitControls, PerspectiveCamera, Hud, Text, Html, ContactShadows, PresentationControls, Float, Environment, useGLTF } from '@react-three/drei'
+import { OrbitControls, CameraControls, PerspectiveCamera, Hud, Text, Html, ContactShadows, PresentationControls, Float, Environment, useGLTF } from '@react-three/drei'
 import { useLoader, useFrame, useThree } from '@react-three/fiber'
 import {TextureLoader } from 'three/src/loaders/TextureLoader'
 import { useEffect, useRef, useState } from 'react'
@@ -14,35 +14,27 @@ export default function MainMenu() {
     const { viewport } = useThree();
 
     const gradientMap = useLoader(TextureLoader, './gradientMaps/threeTone.jpg')
-    
-    console.log(gradientMap)
-    
 
     const coords = new THREE.Vector3(-30,5,10)
 
-    camera.position.copy(coords)
+    const [menuPositions, setMenuPositions] = useState({
+        play: [ - viewport.width / 2 + 0.2, -viewport.height / 2.5 + 2.4, 0],
+        how: [ - viewport.width / 2 + 0.8, -viewport.height / 2.5 + 1.6, 0],
+        about: [ - viewport.width / 2 + 1.6, -viewport.height / 2.5 + 0.8, 0],
+        report: [ - viewport.width / 2 + 2.4, -viewport.height / 2.5 + 0, 0]
+    });
+    const [cameraStart, setCameraStart] = useState(false);
 
-
-
-    // const look = new THREE.Vector3(-20,10,-9)
-    // camera.lookAt(look);
+    //camera.position.copy(coords)
 
     const stand = useRef();
     const ball = useRef();
     const playGameRef = useRef();
-
-    //camera.add(playGameRef.current)
+    const selectionRef= useRef();
+    const cameraControlsRef = useRef();
 
     useFrame((state, delta) => {
-
-        
-        //playGameRef.current.position.z -= 10
-
-        //camera.position.x += 1;
         const look = new THREE.Vector3(-20,10,-9)
-        camera.lookAt(look);
-
-        // playGameRef.current.lookAt(camera.position)
         
 
         ball.current.rotation.y += 0.02;
@@ -51,12 +43,64 @@ export default function MainMenu() {
     })
 
     useEffect(() => {
-        console.log(camera.position)
-    
-        
+        const handleResize = () => {
+            const {viewport} = useThree();
+            setMenuPositions( {
+                play: [ - viewport.width / 2 + 0.2, -viewport.height / 2.5 + 2.4, 0],
+                how: [ - viewport.width / 2 + 0.8, -viewport.height / 2.5 + 1.6, 0],
+                about: [ - viewport.width / 2 + 1.6, -viewport.height / 2.5 + 0.8, 0],
+                report: [ - viewport.width / 2 + 2.4, -viewport.height / 2.5 + 0, 0],
+            })
+        };
+ 
+        window.addEventListener("resize", handleResize);
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
     }, []);
 
+
+    useEffect(() => {
+        cameraControlsRef.current.setPosition(-30,5,10, true)
+        cameraControlsRef.current.setTarget(-20,10,-9, true)
+    }, []);
+
+
+
+    const playGameHover = () => {
+        const pos = new THREE.Vector3(- viewport.width / 2 - 1, -viewport.height / 2.5 + 2.4, -1.6);
+        selectionRef.current.position.copy(pos);
+
+        cameraControlsRef.current.setTarget(-8,9,-3, true)
+        cameraControlsRef.current.setPosition(-2.7,11,2, true)
+        
+    }
+    const howToPlayHover = () => {
+        const pos = new THREE.Vector3(menuPositions.how[0] - 1, menuPositions.how[1]-0.2, -1.6);
+        selectionRef.current.position.copy(pos);
+
+        cameraControlsRef.current.setTarget(4,13.8,-7.2, true)
+        cameraControlsRef.current.setPosition(6,13.8,0, true)
+    }
+    const aboutMeHover = () => {
+        const pos = new THREE.Vector3(menuPositions.about[0] - 0.8, menuPositions.about[1]-0.2, -1.6);
+        selectionRef.current.position.copy(pos);
+
+        cameraControlsRef.current.setTarget(10,8,-5, true)
+        cameraControlsRef.current.setPosition(10,14,2, true)
+    }
+    const reportBugsHover = () => {
+        const pos = new THREE.Vector3(menuPositions.report[0] - 0.6, menuPositions.report[1]-0.5, -1.6);
+        selectionRef.current.position.copy(pos);
+
+        // 12,10.5,-9.5
+        cameraControlsRef.current.setTarget(12,10.5,-11, true)
+        cameraControlsRef.current.setPosition(21,10.5,-8, true)
+    }
+
     return <>
+        <CameraControls ref={cameraControlsRef}/>
+
         <pointLight position={[10, 10, 10]} />
         <directionalLight position={[1, 1, 1]} />
         <mesh
@@ -71,6 +115,21 @@ export default function MainMenu() {
                 color="red"
             />
         </mesh>
+
+        <mesh
+            position={[12,10.5,-9.5]}
+            scale={[0.5,0.5,0.5]}
+        >
+            <torusKnotGeometry/>
+            {/* <meshStandardMaterial
+            color="red">
+
+            </meshStandardMaterial> */}
+            <meshToonMaterial 
+                color="red"
+            />
+        </mesh>
+
         <primitive 
             object={scene.scene} 
             position-y={ -1.2 }
@@ -81,17 +140,50 @@ export default function MainMenu() {
         </primitive>
 
 
-
         <Text
-            font="./fonts/earwig_factory_rg.otf"
-            fontSize={1}
-            position={[viewport.width / 2 - 1, viewport.height/2 - 1, 0]}
+            fontSize={0.3}
+            position={[-8.3,9.5,-2.48]}
+            rotation={[0, Math.PI / 6.5 ,0]}
+            font='./fonts/powerpuff.ttf'
             color={'white'}
             outlineOpacity={1}
-            ref={playGameRef}
         >
-                    Play Game
-                </Text>
+                Play Game
+        </Text>
+
+        <Text
+            fontSize={0.8}
+            position={[6,13.8,-6.4]}
+            rotation={[0, 0 ,0.2]}
+            font='./fonts/powerpuff.ttf'
+            color={'white'}
+            outlineOpacity={1}
+            maxWidth={1}
+        >
+                How To Play
+        </Text>
+
+        <Text
+            fontSize={0.5}
+            position={[10.6,11.0,-4]}
+            rotation={[-0.7, -0.25 , -0.27]}
+            font='./fonts/powerpuff.ttf'
+            color={'black'}
+            outlineOpacity={1}
+        >
+                About Me
+        </Text>
+        <Text
+            fontSize={0.5}
+            position={[11.85,14,-15]}
+            rotation={[-0.4, Math.PI/2 , 0]}
+            font='./fonts/powerpuff.ttf'
+            color={'black'}
+            outlineOpacity={1}
+        >
+                Report Bugs
+        </Text>
+
 
         <Hud renderPriority={1}>
             <ambientLight intensity={Math.PI / 2} />
@@ -100,56 +192,102 @@ export default function MainMenu() {
             <PerspectiveCamera makeDefault position={[0, 0, 10]} />
 
             <Text
-                fontSize={0.5}
-                position={[ - viewport.width / 2 + 1, viewport.height / 2, 0]}
-                color={'white'}
-                outlineOpacity={1}
-                ref={playGameRef}
-            >
-                    CrossWar
+                    fontSize={0.5}
+                    position={[ - viewport.width / 2 + 1, viewport.height / 2, 0]}
+                    color={'white'}
+                    outlineOpacity={1}
+                >
+                        CrossWar
             </Text>
 
-            <Text
-                font="./fonts/Expose-Regular.otf"
-                fontSize={0.5}
-                position={[ - viewport.width / 2 + 1, -viewport.height / 2 + 2.4, 0]}
-                color={'white'}
-                outlineOpacity={1}
-                ref={playGameRef}
-            >
-                    Play Game
-            </Text>
 
-            <Text
-                font="./fonts/Expose-Regular.otf"
-                fontSize={0.5}
-                position={[ - viewport.width / 2 + 1, -viewport.height / 2 + 1.6, 0]}
-                color={'white'}
-                outlineOpacity={1}
+            <Float
+                rotationIntensity={0.6}   
+                floatIntensity={0.3}
+                speed={1}
             >
-                    How to Play
-            </Text>
+                <mesh
+                    position={[ menuPositions.play[0], menuPositions.play[1], menuPositions.play[2],]}
+                    onPointerMove={playGameHover}
+                >
+                    <Text
+                        font="./fonts/Expose-Regular.otf"
+                        fontSize={0.5}
+                        color={'white'}
+                        rotation-y={Math.PI/4}
+                        outlineOpacity={1}
+                        ref={playGameRef}
+                    >
+                            Play Game
+                    </Text>
+                </mesh>
 
-            <Text
-                font="./fonts/Expose-Regular.otf"
-                fontSize={0.5}
-                position={[ - viewport.width / 2 + 1, -viewport.height / 2 + 0.8, 0]}
-                color={'white'}
-                outlineOpacity={1}
-            >
-                    About Me
-            </Text>
+                <mesh
+                    position={[ menuPositions.how[0], menuPositions.how[1], menuPositions.how[2],]}
+                    onPointerMove={howToPlayHover}
+                >
+                    <Text
+                        font="./fonts/Expose-Regular.otf"
+                        fontSize={0.5}
+                        rotation-y={Math.PI/4}
+                        color={'white'}
+                        outlineOpacity={1}
+                    >
+                            How to Play
+                    </Text>
+                </mesh>
 
-            <Text
-                font="./fonts/Expose-Regular.otf"
-                fontSize={0.5}
-                position={[ - viewport.width / 2 + 1, -viewport.height / 2 + 0, 0]}
-                color={'white'}
-                outlineOpacity={1}
-            >
-                    Report Bugs
-            </Text>
+                <mesh
+                    position={[ menuPositions.about[0], menuPositions.about[1], menuPositions.about[2],]}
+                    onPointerMove={aboutMeHover}
+                >
+                    <Text
+                        font="./fonts/Expose-Regular.otf"
+                        fontSize={0.5}
+                        rotation-y={Math.PI/4}
+                        color={'white'}
+                        outlineOpacity={1}
+                    >
+                            About Me
+                    </Text>
+                </mesh>
+
+                <mesh
+                    position={[ menuPositions.report[0], menuPositions.report[1], menuPositions.report[2],]}
+                    onPointerMove={reportBugsHover}
+                >
+                    <Text
+                        font="./fonts/Expose-Regular.otf"
+                        fontSize={0.5}
+                        rotation-y={Math.PI/4}
+                        color={'white'}
+                        outlineOpacity={1}
+                    >
+                            Report Bugs
+                    </Text>
+                </mesh>
+
+                <Float
+                    rotationIntensity={0.2}
+                    floatIntensity={0.5}
+                    speed={40}
+                >
+                    <mesh 
+                        position={[ - viewport.width / 2 - 0.6, -viewport.height / 2.5 + 2.4, -1.6]}
+                        scale={[1,1,3]}
+                        rotation-y={Math.PI - 1}
+                        ref={selectionRef}
+                    >
+                        <boxGeometry></boxGeometry>
+                        <meshBasicMaterial
+                            color="red"
+                        />
+                    </mesh>
+                </Float>
+            </Float>
+
             
+
             <ambientLight intensity={1} />
             <pointLight position={[200, 200, 100]} intensity={0.5} />
         </Hud>
