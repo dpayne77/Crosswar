@@ -71,8 +71,8 @@ export default function MainMenu() {
 
 
     useEffect(() => {
-        cameraControlsRef.current.setPosition(-30,5,10, true)
-        cameraControlsRef.current.setTarget(-20,10,-9, true)
+        // cameraControlsRef.current.setPosition(-30,5,10, true)
+        // cameraControlsRef.current.setTarget(-20,10,-9, true)
     }, []);
 
 
@@ -133,6 +133,10 @@ export default function MainMenu() {
 
     const selectClick = () => {
         console.log("RED GUY")
+    }
+
+    const reportBugsClick = () => {
+        window.open("https://github.com/dpayne77/Crosswar/issues")
     }
 
     return <>
@@ -294,6 +298,7 @@ export default function MainMenu() {
                 <mesh
                     position={[ menuPositions.report[0], menuPositions.report[1], menuPositions.report[2],]}
                     onPointerMove={reportBugsHover}
+                    onClick={reportBugsClick}
                 >
                     <Text
                         font="./fonts/Expose-Regular.otf"
