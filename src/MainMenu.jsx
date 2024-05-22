@@ -3,6 +3,7 @@ import { useLoader, useFrame, useThree } from '@react-three/fiber'
 import {TextureLoader } from 'three/src/loaders/TextureLoader'
 import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three';
+import HowToPlay from './HowToPlay';
 
 
 export default function MainMenu() {
@@ -32,6 +33,8 @@ export default function MainMenu() {
     const playGameRef = useRef();
     const selectionRef= useRef();
     const cameraControlsRef = useRef();
+
+    const [howToPlayClick, setHowToPlayClick] = useState(false);
 
     useFrame((state, delta) => {
         const look = new THREE.Vector3(-20,10,-9)
@@ -96,6 +99,10 @@ export default function MainMenu() {
         // 12,10.5,-9.5
         cameraControlsRef.current.setTarget(12,10.5,-11, true)
         cameraControlsRef.current.setPosition(21,10.5,-8, true)
+    }
+
+    const howToPlayClickEvent = () => {
+        setHowToPlayClick(true);
     }
 
     return <>
@@ -225,6 +232,7 @@ export default function MainMenu() {
                 <mesh
                     position={[ menuPositions.how[0], menuPositions.how[1], menuPositions.how[2],]}
                     onPointerMove={howToPlayHover}
+                    onClick={howToPlayClickEvent}
                 >
                     <Text
                         font="./fonts/Expose-Regular.otf"
@@ -291,5 +299,13 @@ export default function MainMenu() {
             <ambientLight intensity={1} />
             <pointLight position={[200, 200, 100]} intensity={0.5} />
         </Hud>
+
+        {howToPlayClick ? (
+                <HowToPlay />
+            ) : (
+                null
+            )
+        }
+        
     </>
 }
