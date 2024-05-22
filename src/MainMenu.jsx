@@ -14,7 +14,8 @@ export default function MainMenu() {
     const { width, height } = useThree(state => state.viewport);
     const { viewport } = useThree();
 
-    const gradientMap = useLoader(TextureLoader, './gradientMaps/threeTone.jpg')
+    //const gradientMap = useLoader(TextureLoader, './gradientMaps/threeTone.jpg')
+    const stars = new TextureLoader().load("./textures/persona5_stars_large.jpg")
 
     const coords = new THREE.Vector3(-30,5,10)
 
@@ -73,6 +74,7 @@ export default function MainMenu() {
     const playGameHover = () => {
         const pos = new THREE.Vector3(- viewport.width / 2 - 1, -viewport.height / 2.5 + 2.4, -1.6);
         selectionRef.current.position.copy(pos);
+        //selectionRef.current.position.lerp(pos, 0.2);
 
         cameraControlsRef.current.setTarget(-8,9,-3, true)
         cameraControlsRef.current.setPosition(-2.7,11,2, true)
@@ -81,6 +83,7 @@ export default function MainMenu() {
     const howToPlayHover = () => {
         const pos = new THREE.Vector3(menuPositions.how[0] - 1, menuPositions.how[1]-0.2, -1.6);
         selectionRef.current.position.copy(pos);
+        //selectionRef.current.position.lerp(pos, 0.2);
 
         cameraControlsRef.current.setTarget(4,13.8,-7.2, true)
         cameraControlsRef.current.setPosition(6,13.8,0, true)
@@ -88,6 +91,7 @@ export default function MainMenu() {
     const aboutMeHover = () => {
         const pos = new THREE.Vector3(menuPositions.about[0] - 0.8, menuPositions.about[1]-0.2, -1.6);
         selectionRef.current.position.copy(pos);
+        //selectionRef.current.position.lerp(pos, 0.2);
 
         cameraControlsRef.current.setTarget(10,8,-5, true)
         cameraControlsRef.current.setPosition(10,14,2, true)
@@ -95,14 +99,23 @@ export default function MainMenu() {
     const reportBugsHover = () => {
         const pos = new THREE.Vector3(menuPositions.report[0] - 0.6, menuPositions.report[1]-0.5, -1.6);
         selectionRef.current.position.copy(pos);
+        //selectionRef.current.position.lerp(pos, 0.2);
 
-        // 12,10.5,-9.5
         cameraControlsRef.current.setTarget(12,10.5,-11, true)
         cameraControlsRef.current.setPosition(21,10.5,-8, true)
     }
 
     const howToPlayClickEvent = () => {
         setHowToPlayClick(true);
+    }
+
+    const howToPlayClickOff = () => {
+        setHowToPlayClick(false);
+        console.log("test")
+    }
+
+    const selectClick = () => {
+        console.log("RED GUY")
     }
 
     return <>
@@ -285,6 +298,7 @@ export default function MainMenu() {
                         scale={[1,1,3]}
                         rotation-y={Math.PI - 1}
                         ref={selectionRef}
+                        onPointerMove={selectClick}
                     >
                         <boxGeometry></boxGeometry>
                         <meshBasicMaterial
@@ -300,8 +314,9 @@ export default function MainMenu() {
             <pointLight position={[200, 200, 100]} intensity={0.5} />
         </Hud>
 
+            
         {howToPlayClick ? (
-                <HowToPlay />
+                <HowToPlay stars={stars} terminate={howToPlayClickOff}/>
             ) : (
                 null
             )
