@@ -197,14 +197,14 @@ Et quisquam pariatur non eius odio ut aperiam dolorem ad animi galisum! Sit dign
             floatIntensity={0.01}
             speed={40}
         >
-            <mesh position={[0.9,-1.42,50]} scale={[1.1, 0.5, 0]} rotation={[0,-0.9,0.1]} ref={redRef} onClick={okOnClick}>
+            <mesh position={[0.9,-1.42,50]} scale={[1.1, 0.5, 0.1]} rotation={[0,-0.9,0.1]} ref={redRef} onClick={okOnClick}>
                 <planeGeometry/>
                 <meshBasicMaterial color="red"/>
             </mesh>
         </Float>
 
         <group onPointerMove={okHoverEvent}>
-        <mesh position={[10,-1.8,5]} scale={[0.8, 0.4, 0]} rotation={[0,-0.9,0.1]} onClick={okOnClick} onPointerMove={okHoverEvent} ref={whiteRef}>
+        <mesh position={[10,-1.8,5]} scale={[0.8, 0.4, 0.1]} rotation={[0,-0.9,0.1]} onClick={okOnClick} onPointerMove={okHoverEvent} ref={whiteRef}>
             <planeGeometry scale={[1, 0.4, 0]}/>
         </mesh>
 

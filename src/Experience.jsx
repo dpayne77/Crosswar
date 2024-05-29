@@ -9,7 +9,7 @@ export default function Experience()
     return <>
 
         <Environment preset="city" />
-        <OrbitControls></OrbitControls>
+        {/* <OrbitControls></OrbitControls> */}
 
         <color args = {['#241a1a']} attach="background" />
 

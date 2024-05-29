@@ -5,6 +5,8 @@ import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three';
 import HowToPlay from './HowToPlay';
 import AboutMe from './AboutMe';
+import PlayGame from './PlayGame';
+import { Skunk } from './models/Skunk';
 
 
 export default function MainMenu() {
@@ -47,9 +49,6 @@ export default function MainMenu() {
         const look = new THREE.Vector3(-20,10,-9)
         
 
-        ball.current.rotation.y += 0.02;
-        ball.current.position.copy(look);
-
     })
 
     useEffect(() => {
@@ -71,44 +70,69 @@ export default function MainMenu() {
 
 
     useEffect(() => {
-        // cameraControlsRef.current.setPosition(-30,5,10, true)
-        // cameraControlsRef.current.setTarget(-20,10,-9, true)
+        cameraControlsRef.current.setPosition(-20,5,10, true)
+        cameraControlsRef.current.setTarget(-10,10,-9, true)
     }, []);
 
 
 
     const playGameHover = () => {
-        const pos = new THREE.Vector3(- viewport.width / 2 - 1, -viewport.height / 2.5 + 2.4, -1.6);
-        selectionRef.current.position.copy(pos);
-        //selectionRef.current.position.lerp(pos, 0.2);
+        if (!playGameClick && !howToPlayClick && !aboutMeClick) {
+            const pos = new THREE.Vector3(- viewport.width / 2 - 1, -viewport.height / 2.5 + 2.4, -1.6);
+            selectionRef.current.position.copy(pos);
+            //selectionRef.current.position.lerp(pos, 0.2);
 
-        cameraControlsRef.current.setTarget(-8,9,-3, true)
-        cameraControlsRef.current.setPosition(-2.7,11,2, true)
+            cameraControlsRef.current.setTarget(-8,9,-3, true)
+            cameraControlsRef.current.setPosition(-2.7,11,2, true)
+        }
         
     }
-    const howToPlayHover = () => {
-        const pos = new THREE.Vector3(menuPositions.how[0] - 1, menuPositions.how[1]-0.2, -1.6);
-        selectionRef.current.position.copy(pos);
-        //selectionRef.current.position.lerp(pos, 0.2);
 
-        cameraControlsRef.current.setTarget(4,13.8,-7.2, true)
-        cameraControlsRef.current.setPosition(6,13.8,0, true)
+    const playGameClickEvent = () => {
+        console.log("TEST")
+        if (!playGameClick && !howToPlayClick && !aboutMeClick) {
+            setPlayGameClick(true);
+
+            cameraControlsRef.current.setPosition(-24,10,-8, true)
+            cameraControlsRef.current.setTarget(-8,10,-12, true)
+        }
+    }
+    
+    const playGameClickOff = () => {
+        setPlayGameClick(false);
+        cameraControlsRef.current.setTarget(-8,9,-3, true)
+        cameraControlsRef.current.setPosition(-2.7,11,2, true)
+    }
+
+    const howToPlayHover = () => {
+        if (!playGameClick && !howToPlayClick && !aboutMeClick) {
+            const pos = new THREE.Vector3(menuPositions.how[0] - 1, menuPositions.how[1]-0.2, -1.6);
+            selectionRef.current.position.copy(pos);
+            //selectionRef.current.position.lerp(pos, 0.2);
+
+            cameraControlsRef.current.setTarget(4,13.8,-7.2, true)
+            cameraControlsRef.current.setPosition(6,13.8,0, true)
+        }
     }
     const aboutMeHover = () => {
-        const pos = new THREE.Vector3(menuPositions.about[0] - 0.8, menuPositions.about[1]-0.2, -1.6);
-        selectionRef.current.position.copy(pos);
-        //selectionRef.current.position.lerp(pos, 0.2);
+        if (!playGameClick && !howToPlayClick && !aboutMeClick) {
+            const pos = new THREE.Vector3(menuPositions.about[0] - 0.8, menuPositions.about[1]-0.2, -1.6);
+            selectionRef.current.position.copy(pos);
+            //selectionRef.current.position.lerp(pos, 0.2);
 
-        cameraControlsRef.current.setTarget(10,8,-5, true)
-        cameraControlsRef.current.setPosition(10,14,2, true)
+            cameraControlsRef.current.setTarget(10,8,-5, true)
+            cameraControlsRef.current.setPosition(10,14,2, true)
+        }
     }
     const reportBugsHover = () => {
-        const pos = new THREE.Vector3(menuPositions.report[0] - 0.6, menuPositions.report[1]-0.5, -1.6);
-        selectionRef.current.position.copy(pos);
-        //selectionRef.current.position.lerp(pos, 0.2);
+        if (!playGameClick && !howToPlayClick && !aboutMeClick) {
+            const pos = new THREE.Vector3(menuPositions.report[0] - 0.6, menuPositions.report[1]-0.5, -1.6);
+            selectionRef.current.position.copy(pos);
+            //selectionRef.current.position.lerp(pos, 0.2);
 
-        cameraControlsRef.current.setTarget(12,10.5,-11, true)
-        cameraControlsRef.current.setPosition(21,10.5,-8, true)
+            cameraControlsRef.current.setTarget(12,10.5,-11, true)
+            cameraControlsRef.current.setPosition(21,10.5,-8, true)
+        }
     }
 
     const howToPlayClickEvent = () => {
@@ -140,36 +164,13 @@ export default function MainMenu() {
     }
 
     return <>
+
+        <Skunk position={[-16,-1,-12]} scale={[3,3,3]} rotation={[0,-1,0]}/>
+
         <CameraControls ref={cameraControlsRef}/>
 
-        <pointLight position={[10, 10, 10]} />
-        <directionalLight position={[1, 1, 1]} />
-        <mesh
-            ref={ball}
-        >
-            <torusKnotGeometry/>
-            {/* <meshStandardMaterial
-            color="red">
 
-            </meshStandardMaterial> */}
-            <meshToonMaterial 
-                color="red"
-            />
-        </mesh>
-
-        <mesh
-            position={[12,10.5,-9.5]}
-            scale={[0.5,0.5,0.5]}
-        >
-            <torusKnotGeometry/>
-            {/* <meshStandardMaterial
-            color="red">
-
-            </meshStandardMaterial> */}
-            <meshToonMaterial 
-                color="red"
-            />
-        </mesh>
+        <directionalLight position={[1, 1, 1]} intensity={2} color={'WhiteSmoke'}/>
 
         <primitive 
             object={scene.scene} 
@@ -250,6 +251,7 @@ export default function MainMenu() {
                 <mesh
                     position={[ menuPositions.play[0], menuPositions.play[1], menuPositions.play[2],]}
                     onPointerMove={playGameHover}
+                    onClick={playGameClickEvent}
                 >
                     <Text
                         font="./fonts/Expose-Regular.otf"
@@ -351,6 +353,8 @@ export default function MainMenu() {
                 null
             )
         }
+
+        <PlayGame playGame={playGameClick} terminate={playGameClickOff}/>
         
     </>
 }
