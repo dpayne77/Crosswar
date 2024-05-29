@@ -17,10 +17,15 @@ export default function MainMenu() {
     const { width, height } = useThree(state => state.viewport);
     const { viewport } = useThree();
 
-    const [stars, linkedIn, gitHub] = useTexture([
+    const [stars, linkedIn, gitHub, dog, cat, skunk, cow, panda] = useTexture([
         './textures/persona5_stars_large.jpg',
         './textures/linkedIn.jpg',
-        './textures/GitHub.jpg'
+        './textures/GitHub.jpg',
+        './textures/icons/ICON_Dog.png',
+        './textures/icons/ICON_Cat.png',
+        './textures/icons/ICON_Skunk.png',
+        './textures/icons/ICON_Cow.png',
+        './textures/icons/ICON_Panda.png',
     ])
 
     const coords = new THREE.Vector3(-30,5,10)
@@ -354,7 +359,7 @@ export default function MainMenu() {
             )
         }
 
-        <PlayGame playGame={playGameClick} terminate={playGameClickOff}/>
+        <PlayGame playGame={playGameClick} terminate={playGameClickOff} dog={dog} cat={cat} skunk={skunk} cow={cow} panda={panda}/>
         
     </>
 }

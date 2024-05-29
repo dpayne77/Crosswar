@@ -56,7 +56,7 @@ export default function PlayGame(props)
             if (groupRef.current.rotation.x <= 0.3) {
                 groupRef.current.rotation.x += 0.1
             }
-            if (groupRef.current.rotation.y <= -0.2) {
+            if (groupRef.current.rotation.y <= -0.5) {
                 groupRef.current.rotation.y += 0.1
             }
             if (groupRef.current.rotation.z <= 0.5) {
@@ -106,23 +106,23 @@ export default function PlayGame(props)
 
 
         if (selectedAnimalHover == 1 || (selectedAnimalHover == 0 && selectedAnimalClick == 1)) {
-            vec.set(-1.60,-0.07,0.6)
+            vec.set(-1.48,-0.07,0.6)
             animalSelectRef.current.position.lerp(vec, 0.8)
         }
         else if (selectedAnimalHover == 2 || (selectedAnimalHover == 0 && selectedAnimalClick == 2)) {
-            vec.set(-0.75,-0.07,0.6)
+            vec.set(-0.65,-0.07,0.6)
             animalSelectRef.current.position.lerp(vec, 0.8)
         }
         else if (selectedAnimalHover == 3 || (selectedAnimalHover == 0 && selectedAnimalClick == 3)) {
-            vec.set(0.12,-0.07,0.6)
+            vec.set(0.20,-0.07,0.6)
             animalSelectRef.current.position.lerp(vec, 0.8)
         }
         else if (selectedAnimalHover == 4 || (selectedAnimalHover == 0 && selectedAnimalClick == 4)) {
-            vec.set(0.92,-0.07,0.6)
+            vec.set(1.02,-0.07,0.6)
             animalSelectRef.current.position.lerp(vec, 0.8)
         }
         else if (selectedAnimalHover == 5 || (selectedAnimalHover == 0 && selectedAnimalClick == 5)) {
-            vec.set(1.72,-0.07,0.8)
+            vec.set(1.85,-0.07,0.8)
             animalSelectRef.current.position.lerp(vec, 0.8)
         }
 
@@ -311,34 +311,34 @@ export default function PlayGame(props)
 
                     {/* Characters */}
 
-                    <mesh position={[-1.5, -0.1, 1]} scale={[0.6, 0.6, 0.1]} rotation={[0, 0, 0]} ref={dogRef} onClick={dogClick} onPointerOver={dogHover}>
+                    <mesh position={[-1.4, -0.1, 1]} scale={[0.8, 0.8, 0.001]} rotation={[0, 0, 0]} ref={dogRef} onClick={dogClick} onPointerOver={dogHover}>
                         {/* Dog */}
                         <boxGeometry/>
-                        <meshBasicMaterial color="white" />
+                        <meshLambertMaterial map={props.dog} transparent={true} />
                     </mesh>
 
-                    <mesh position={[-0.7, -0.1, 1]} scale={[0.6, 0.6, 0.1]} rotation={[0, 0, 0]} onClick={catClick} onPointerOver={catHover}>
+                    <mesh position={[-0.6, -0.1, 1]} scale={[0.8, 0.8, 0.001]} rotation={[0, 0, 0]} onClick={catClick} onPointerOver={catHover}>
                         {/* Cat */}
                         <planeGeometry />
-                        <meshBasicMaterial color="white" />
+                        <meshLambertMaterial map={props.cat} transparent={true}/>
                     </mesh>
 
-                    <mesh position={[0.1, -0.1, 1]} scale={[0.6, 0.6, 0.1]} rotation={[0, 0, 0]} onClick={skunkClick} onPointerOver={skunkHover}>
+                    <mesh position={[0.2, -0.1, 1]} scale={[0.8, 0.8, 0.001]} rotation={[0, 0, 0]} onClick={skunkClick} onPointerOver={skunkHover}>
                         {/* Skunk */}
                         <planeGeometry />
-                        <meshBasicMaterial color="white" />
+                        <meshLambertMaterial map={props.skunk} transparent={true}/>
                     </mesh>
 
-                    <mesh position={[0.9, -0.1, 1]} scale={[0.6, 0.6, 0.1]} rotation={[0, 0, 0]} onClick={cowClick} onPointerOver={cowHover}>
+                    <mesh position={[1.0, -0.1, 1]} scale={[0.8, 0.8, 0.001]} rotation={[0, 0, 0]} onClick={cowClick} onPointerOver={cowHover}>
                         {/* Cow */}
                         <planeGeometry />
-                        <meshBasicMaterial color="white" />
+                        <meshLambertMaterial map={props.cow} transparent={true}/>
                     </mesh>
 
-                    <mesh position={[1.7, -0.1, 1]} scale={[0.6, 0.6, 0.1]} rotation={[0, 0, 0]} onClick={pandaClick} onPointerOver={pandaHover}>
+                    <mesh position={[1.8, -0.1, 1]} scale={[0.8, 0.8, 0.001]} rotation={[0, 0, 0]} onClick={pandaClick} onPointerOver={pandaHover}>
                         {/* Panda */}
                         <planeGeometry />
-                        <meshBasicMaterial color="white" />
+                        <meshLambertMaterial map={props.panda} transparent={true}/>
                     </mesh>
 
                     <mesh position={[0,-0.1,-1]} scale={[4.5,1,1]} rotation={[0,-0.3,0]} visible={false} onPointerLeave={animalHoverOff}>
