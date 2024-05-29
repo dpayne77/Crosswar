@@ -14,8 +14,11 @@ export default function PlayGame(props)
     const okSelectRef = useRef();
     const backSelectRef = useRef();
 
-    const [backSelect, setBackSelect] = useState(false);
-    const [okaySelect, setOkaySelect] = useState(false);
+    const [backSelect, setBackSelect] = useState(false)
+    const [okaySelect, setOkaySelect] = useState(false)
+    const [okayClick, setOkayClick] = useState(false);
+    const [selectedAnimalHover, setSelectedAnimalHover] = useState(3)
+    const [selectedAnimalClick, setSelectedAnimalClick] = useState(3)
 
     useFrame(()=> {
         const vec = new THREE.Vector3(0,0,-99999)
@@ -44,27 +47,98 @@ export default function PlayGame(props)
             vec.set(0.6, -1.4, 0.8)
             okSelectRef.current.position.lerp(vec,1)
         }
+
+
+        if (selectedAnimalHover == 1 || (selectedAnimalHover == 0 && selectedAnimalClick == 1)) {
+            vec.set(-1.55,-0.1,0.6)
+            animalSelectRef.current.position.lerp(vec, 0.8)
+        }
+        else if (selectedAnimalHover == 2 || (selectedAnimalHover == 0 && selectedAnimalClick == 2)) {
+            vec.set(-0.7,-0.1,0.6)
+            animalSelectRef.current.position.lerp(vec, 0.8)
+        }
+        else if (selectedAnimalHover == 3 || (selectedAnimalHover == 0 && selectedAnimalClick == 3)) {
+            vec.set(0.13,-0.1,0.6)
+            animalSelectRef.current.position.lerp(vec, 0.8)
+        }
+        else if (selectedAnimalHover == 4 || (selectedAnimalHover == 0 && selectedAnimalClick == 4)) {
+            vec.set(0.95,-0.1,0.6)
+            animalSelectRef.current.position.lerp(vec, 0.8)
+        }
+        else if (selectedAnimalHover == 5 || (selectedAnimalHover == 0 && selectedAnimalClick == 5)) {
+            vec.set(1.75,-0.1,0.8)
+            animalSelectRef.current.position.lerp(vec, 0.8)
+        }
+        else {
+
+        }
+
     })
     
+    const dogHover = () => {
+        if (props.playGame) {
+            setSelectedAnimalHover(1);
+        }
+    }
 
     const dogClick = () => {
-        console.log("Dog Click!")
+        if (props.playGame) {
+            setSelectedAnimalClick(1);
+        }
+    }
+
+    const catHover = () => {
+        if (props.playGame) {
+            setSelectedAnimalHover(2);
+        }
     }
 
     const catClick = () => {
-        console.log("Cat Click!")
+        if (props.playGame) {
+            setSelectedAnimalClick(2);
+        }
+    }
+
+    const skunkHover = () => {
+        if (props.playGame) {
+            setSelectedAnimalHover(3);
+        }
     }
 
     const skunkClick = () => {
-        console.log("Skunk Click!")
+        if (props.playGame) {
+            setSelectedAnimalClick(3);
+        }
+    }
+
+    const cowHover = () => {
+        if (props.playGame) {
+            setSelectedAnimalHover(4);
+        }
     }
 
     const cowClick = () => {
-        console.log("Cow Click!")
+        if (props.playGame) {
+            setSelectedAnimalClick(4);
+        }
+    }
+
+    const pandaHover = () => {
+        if (props.playGame) {
+            setSelectedAnimalHover(5);
+        }
     }
     
     const pandaClick = () => {
-        console.log("Panda Click!")
+        if (props.playGame) {
+            setSelectedAnimalClick(5);
+        }
+    }
+
+    const animalHoverOff = () => {
+        if (props.playGame) {
+            setSelectedAnimalHover(0);
+        }
     }
 
     const okHover = () => {
@@ -77,7 +151,7 @@ export default function PlayGame(props)
 
     const okClick = () => {
         if (props.playGame && okaySelect) {
-            console.log("Okay is clicked.")
+            setOkayClick(true);
         }
     }
 
@@ -152,35 +226,53 @@ export default function PlayGame(props)
 
                 {/* Characters */}
 
-                <mesh position={[-1.5, -0.1, 1]} scale={[0.6, 0.6, 0.1]} rotation={[0, 0, 0]} ref={dogRef} onClick={dogClick} >
+                <mesh position={[-1.5, -0.1, 1]} scale={[0.6, 0.6, 0.1]} rotation={[0, 0, 0]} ref={dogRef} onClick={dogClick} onPointerOver={dogHover}>
                     {/* Dog */}
                     <boxGeometry/>
                     <meshBasicMaterial color="white" />
                 </mesh>
 
-                <mesh position={[-0.7, -0.1, 1]} scale={[0.6, 0.6, 0.1]} rotation={[0, 0, 0]} onClick={catClick}>
+                <mesh position={[-0.7, -0.1, 1]} scale={[0.6, 0.6, 0.1]} rotation={[0, 0, 0]} onClick={catClick} onPointerOver={catHover}>
                     {/* Cat */}
                     <planeGeometry />
                     <meshBasicMaterial color="white" />
                 </mesh>
 
-                <mesh position={[0.1, -0.1, 1]} scale={[0.6, 0.6, 0.1]} rotation={[0, 0, 0]} onClick={skunkClick}>
+                <mesh position={[0.1, -0.1, 1]} scale={[0.6, 0.6, 0.1]} rotation={[0, 0, 0]} onClick={skunkClick} onPointerOver={skunkHover}>
                     {/* Skunk */}
                     <planeGeometry />
                     <meshBasicMaterial color="white" />
                 </mesh>
 
-                <mesh position={[0.9, -0.1, 1]} scale={[0.6, 0.6, 0.1]} rotation={[0, 0, 0]} onClick={cowClick}>
+                <mesh position={[0.9, -0.1, 1]} scale={[0.6, 0.6, 0.1]} rotation={[0, 0, 0]} onClick={cowClick} onPointerOver={cowHover}>
                     {/* Cow */}
                     <planeGeometry />
                     <meshBasicMaterial color="white" />
                 </mesh>
 
-                <mesh position={[1.7, -0.1, 1]} scale={[0.6, 0.6, 0.1]} rotation={[0, 0, 0]} onClick={pandaClick}>
+                <mesh position={[1.7, -0.1, 1]} scale={[0.6, 0.6, 0.1]} rotation={[0, 0, 0]} onClick={pandaClick} onPointerOver={pandaHover}>
                     {/* Panda */}
                     <planeGeometry />
                     <meshBasicMaterial color="white" />
                 </mesh>
+
+                <mesh position={[0,-0.1,-1]} scale={[4.5,1,1]} rotation={[0,-0.3,0]} visible={false} onPointerLeave={animalHoverOff}>
+                    <boxGeometry></boxGeometry>
+                    <meshBasicMaterial color="blue"/>
+                </mesh>
+
+                {/* Red Character Selection Box */}
+
+                <Float
+                    rotationIntensity={0.15}
+                    floatIntensity={0.15}
+                    speed={40}
+                >
+                    <mesh position={[0.13,-0.1,0.6]} scale={[0.8,0.8,0.5]} rotation={[0,0,0]} ref={animalSelectRef}>
+                        <planeGeometry/>
+                        <meshBasicMaterial color="red"/>
+                    </mesh>
+                </Float>
 
                 {/* White OK Heading */}
 
