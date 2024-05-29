@@ -15,6 +15,7 @@ export default function PlayGame(props)
     const backSelectRef = useRef();
 
     const [backSelect, setBackSelect] = useState(false);
+    const [okaySelect, setOkaySelect] = useState(false);
 
     useFrame(()=> {
         const vec = new THREE.Vector3(0,0,-99999)
@@ -33,6 +34,15 @@ export default function PlayGame(props)
         else {
             vec.set(-1, -1.3, 0.9)
             backSelectRef.current.position.lerp(vec, 1)
+        }
+
+        if (!okaySelect) {
+            vec.set(0,0,-5)
+            okSelectRef.current.position.lerp(vec,1)
+        }
+        else {
+            vec.set(0.6, -1.4, 0.8)
+            okSelectRef.current.position.lerp(vec,1)
         }
     })
     
@@ -58,22 +68,29 @@ export default function PlayGame(props)
     }
 
     const okHover = () => {
-        console.log("Okay is Hovered.")
+        if (props.playGame) {
+            setBackSelect(false)
+            setOkaySelect(true)
+            console.log("Okay is Hovered.")
+        }
     }
 
     const okClick = () => {
-        console.log("Okay is clicked.")
+        if (props.playGame && okaySelect) {
+            console.log("Okay is clicked.")
+        }
     }
 
     const backHover = () => {
         if (props.playGame) {
             setBackSelect(true)
+            setOkaySelect(false)
             console.log("Back is Hovered.")
         }
     }
 
     const backClick = () => {
-        if (props.playGame) {
+        if (props.playGame && backSelect) {
             setBackSelect(false);
             props.terminate()
             console.log("Back is clicked.")
@@ -110,11 +127,11 @@ export default function PlayGame(props)
 
                 <mesh position={[-1, 1.48, 1.1]} rotation={[0, 0.5, 0.1]}>
                     <Text 
-                        fontSize={0.35} 
+                        fontSize={0.33} 
                         color="black"
                         font='./fonts/Arsenal-Bold.ttf'
                     >
-                        Pick your animal
+                        Choose your fighter
                     </Text>
                     <meshBasicMaterial color="white" />
                 </mesh>
@@ -167,21 +184,36 @@ export default function PlayGame(props)
 
                 {/* White OK Heading */}
 
-                <mesh position={[0.6, -1.4, 1]} scale={[0.9, 0.6, 0.1]} rotation={[0, -0.3, -0.1]} onPointerMove={okHover} onClick={okClick}>
+                <mesh position={[0.6, -1.4, 1]} scale={[0.9, 0.6, 0.1]} rotation={[0, -0.3, -0.1]} onPointerOver={okHover} onClick={okClick}>
                     <planeGeometry />
                     <meshBasicMaterial color="white" />
                 </mesh>
 
                 {/* Black OK Heading */}
 
-                <mesh position={[0.6, -1.4, 0.8]} scale={[1.1, 0.8, 0.1]} rotation={[0, -0.3, -0.1]} onPointerMove={okHover} onClick={okClick}>
+                <mesh position={[0.6, -1.4, 0.75]} scale={[1.1, 0.8, 0.1]} rotation={[0, -0.3, -0.1]} onPointerOver={okHover} onClick={okClick}>
                     <planeGeometry />
                     <meshBasicMaterial color="black" />
                 </mesh>
 
+                {/* Red OK Heading */}
+
+                <Float
+                    rotationIntensity={0.15}
+                    floatIntensity={0.15}
+                    speed={40}
+                >
+
+                    <mesh position={[0.6, -1.4, 0.8]} scale={[1.2, 0.9, 0.1]} rotation={[0, -0.3, -0.1]} ref={okSelectRef} onClick={okClick}>
+                        <planeGeometry />
+                        <meshBasicMaterial color="red" />
+                    </mesh>
+
+                </Float>
+
                 {/* OK Text */}
 
-                <mesh position={[0.58, -1.37, 1.2]} rotation={[0, -0.3, -0.1]} onPointerMove={okHover} onClick={okClick}>
+                <mesh position={[0.58, -1.37, 1.2]} rotation={[0, -0.3, -0.1]} onPointerOver={okHover} onClick={okClick}>
                     <Text 
                         fontSize={0.55} 
                         color="black"
@@ -193,14 +225,14 @@ export default function PlayGame(props)
 
                 {/* White Back Heading */}
 
-                <mesh position={[-1, -1.3, 1]} scale={[0.6, 0.4, 0.1]} rotation={[0, -0.3, 0.1]} onPointerMove={backHover} onClick={backClick}>
+                <mesh position={[-1, -1.3, 1]} scale={[0.6, 0.4, 0.1]} rotation={[0, -0.3, 0.1]} onPointerOver={backHover} onClick={backClick}>
                     <planeGeometry />
                     <meshBasicMaterial color="white" />
                 </mesh>
 
                 {/* Black Back Heading */}
 
-                <mesh position={[-1, -1.3, 0.8]} scale={[0.8, 0.6, 0.1]} rotation={[0, -0.3, 0.1]} onPointerMove={backHover} onClick={backClick}>
+                <mesh position={[-1, -1.3, 0.8]} scale={[0.8, 0.6, 0.1]} rotation={[0, -0.3, 0.1]} onPointerOver={backHover} onClick={backClick}>
                     <planeGeometry />
                     <meshBasicMaterial color="black" />
                 </mesh>
@@ -213,7 +245,7 @@ export default function PlayGame(props)
                     speed={40}
                 >
 
-                    <mesh position={[-1, -1.3, 0.9]} scale={[0.9, 0.7, 0.1]} rotation={[0, -0.3, 0.1]} ref={backSelectRef} onPointerMove={backHover} onClick={backClick}>
+                    <mesh position={[-1, -1.3, 0.9]} scale={[0.9, 0.7, 0.1]} rotation={[0, -0.3, 0.1]} ref={backSelectRef} onClick={backClick}>
                         <planeGeometry />
                         <meshBasicMaterial color="red" />
                     </mesh>
@@ -222,7 +254,7 @@ export default function PlayGame(props)
 
                 {/* Back Text */}
 
-                <mesh position={[-1, -1.28, 1.2]} rotation={[0, -0.3, 0.1]} onPointerMove={backHover} onClick={backClick}>
+                <mesh position={[-1, -1.28, 1.2]} rotation={[0, -0.3, 0.1]} onPointerOver={backHover} onClick={backClick}>
                     <Text 
                         fontSize={0.2} 
                         color="black"
