@@ -3,9 +3,12 @@ import { useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three';
 import { Form, Input, Label, InputText, Submit } from "r3f-form";
+import { usePlayerAnimations } from "./contexts/playerAnimations"
 
 export default function PlayGame(props)
 {
+    const { animations, animationIndex, setAnimationIndex } = usePlayerAnimations();
+
     const { camera, viewport } = useThree()
 
     const groupRef = useRef();
@@ -209,6 +212,7 @@ export default function PlayGame(props)
     const okClick = () => {
         if (props.playGame && okaySelect) {
             setOkayClick(true);
+            setAnimationIndex(3)
         }
     }
 
@@ -239,6 +243,7 @@ export default function PlayGame(props)
     const waitClick = () => {
         if (props.playGame && okayClick) {
             setOkayClick(false);
+            setAnimationIndex(1)
         }
     }
 

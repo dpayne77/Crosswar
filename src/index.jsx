@@ -2,6 +2,7 @@ import './style.css'
 import ReactDOM from 'react-dom/client'
 import { Canvas } from '@react-three/fiber'
 import Experience from './Experience.jsx'
+import { PlayerAnimationsProvider } from './contexts/playerAnimations.jsx'
 
 const root = ReactDOM.createRoot(document.querySelector('#root'))
 
@@ -16,6 +17,8 @@ root.render(
         // } }
         // className='r3f'
     >
-        <Experience />
+        <PlayerAnimationsProvider>
+            <Experience />
+        </PlayerAnimationsProvider>
     </Canvas>
 )
