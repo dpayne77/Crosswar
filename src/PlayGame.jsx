@@ -2,6 +2,7 @@ import { PerspectiveCamera, Hud, Text, Html, Float } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three';
+import { Form, Input, Label, InputText, Submit } from "r3f-form";
 
 export default function PlayGame(props)
 {
@@ -25,6 +26,9 @@ export default function PlayGame(props)
 
     const [waitSelect, setWaitSelect] = useState(false)
     const [goSelect, setGoSelect] = useState(false)
+
+    const [name, setName] = useState("")
+    const [room, setRoom] = useState("")
 
     useFrame(()=> {
         const vec = new THREE.Vector3(0,0,-99999)
@@ -100,7 +104,7 @@ export default function PlayGame(props)
             goSelectRef.current.position.lerp(vec,1)
         }
         else {
-            vec.set(0.6, -1.4, 0.8)
+            vec.set(0.6, -1.45, 0.8)
             goSelectRef.current.position.lerp(vec,1)
         }
 
@@ -247,7 +251,18 @@ export default function PlayGame(props)
 
     const goClick = () => {
         if (props.playGame && okayClick) {
-            // TBD
+            if (name != "" && room != "") {
+                console.log("Join room now!")
+                // socket
+            }
+        }
+    }
+
+    const roomKeyDown = (key) => {
+        if (key == "Enter") {
+            setGoSelect(true)
+            setWaitSelect(false)
+            goClick()
         }
     }
 
@@ -444,12 +459,32 @@ export default function PlayGame(props)
                 </group>
             </Float>
 
+            {/* <Label position={[0,0,7]} scale={[5,5,5]}color="blue" text="Name"/>
+            <Input /> */}
+
             <Float
                 rotationIntensity={0.3}   
                 floatIntensity={0.3}
                 speed={1}
             >
                 <group position={[3.2,-1.5,0]} rotation={[0,-0.3,-0.1]} ref={groupRef2}>
+
+                    {/* Name and Room Boxes*/}
+
+                    <Label position={[-1.2,0.7,2]} scale={[4.2,4.2,4.2]} rotation={[0, -0.3, -0.1]} font="./fonts/Arsenal-Bold.ttf" color="#ffffff" text="Name:"/>
+                    <Input position={[0.4, 0.68, 2]} scale={[4.2,4.2,4.2]} rotation={[0,-0.3,-0.1]} width={0.56} backgroundOpacity={0.1} backgroundColor="#ffffff" selectionColor={"red"} 
+                        onChange={(e) => {setName(e.target.value)}}
+                    >
+                        <InputText font="./fonts/Arsenal-Bold.ttf" color="white" />
+                    </Input>
+                    
+                    <Label position={[-1.2,0,2]} scale={[4.2,4.2,4.2]} rotation={[0, -0.3, -0.1]} font="./fonts/Arsenal-Bold.ttf" color="white" text="Room:"/>
+                    <Input position={[0.38, -0.1, 2]} scale={[4.2,4.2,4.2]} rotation={[0,-0.3,-0.1]} width={0.56} backgroundOpacity={0.1} backgroundColor="#ffffff" selectionColor={"red"} 
+                        onChange={(e) => {setRoom(e.target.value)}}
+                        onKeyDown={(e) => {roomKeyDown(e.key)}}
+                    >
+                        <InputText font="./fonts/Arsenal-Bold.ttf" color="white" />
+                    </Input>
 
                     {/* Main Square */}
 
@@ -460,14 +495,14 @@ export default function PlayGame(props)
 
                     {/* Header Square White */}
 
-                    <mesh position={[1.4, 1.5, 1]} scale={[3, 0.6, 0]} rotation={[0, -0.5, -0.1]}>
+                    <mesh position={[1.4, 1.56, 1]} scale={[3, 0.6, 0]} rotation={[0, -0.5, -0.1]}>
                         <planeGeometry />
                         <meshBasicMaterial color="white" />
                     </mesh>
 
                     {/* Pick your animal */}
 
-                    <mesh position={[1.4, 1.48, 1.1]} rotation={[0, -0.5, -0.1]}>
+                    <mesh position={[1.4, 1.55, 1.1]} rotation={[0, -0.5, -0.1]}>
                         <Text 
                             fontSize={0.33} 
                             color="black"
@@ -514,7 +549,7 @@ export default function PlayGame(props)
                         speed={40}
                     >
 
-                        <mesh position={[0.6, -1.4, 0.8]} scale={[1.2, 0.9, 0.1]} rotation={[0, -0.3, -0.1]} ref={goSelectRef}>
+                        <mesh position={[0.6, -1.45, 0.8]} scale={[1.2, 0.9, 0.1]} rotation={[0, -0.3, -0.1]} ref={goSelectRef}>
                             <planeGeometry />
                             <meshBasicMaterial color="red" />
                         </mesh>
