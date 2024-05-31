@@ -20,6 +20,7 @@ export default function PlayGame(props)
     const backSelectRef = useRef();
     const goSelectRef = useRef();
     const waitSelectRef = useRef();
+    const nameInputRef = useRef();
 
     const [backSelect, setBackSelect] = useState(false)
     const [okaySelect, setOkaySelect] = useState(false)
@@ -213,6 +214,7 @@ export default function PlayGame(props)
         if (props.playGame && okaySelect) {
             setOkayClick(true);
             setAnimationIndex(3)
+            nameInputRef.current.focus()
         }
     }
 
@@ -479,6 +481,7 @@ export default function PlayGame(props)
                     <Label position={[-1.2,0.7,2]} scale={[4.2,4.2,4.2]} rotation={[0, -0.3, -0.1]} font="./fonts/Arsenal-Bold.ttf" color="#ffffff" text="Name:"/>
                     <Input position={[0.4, 0.68, 2]} scale={[4.2,4.2,4.2]} rotation={[0,-0.3,-0.1]} width={0.56} backgroundOpacity={0.1} backgroundColor="#ffffff" selectionColor={"red"} 
                         onChange={(e) => {setName(e.target.value)}}
+                        ref={nameInputRef}
                     >
                         <InputText font="./fonts/Arsenal-Bold.ttf" color="white" />
                     </Input>
