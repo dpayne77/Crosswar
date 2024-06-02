@@ -1,8 +1,8 @@
-import { PerspectiveCamera, Hud, Text, Html, Float } from '@react-three/drei'
+import { PerspectiveCamera, Hud, Text, Float } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three';
-import { Form, Input, Label, InputText, Submit } from "r3f-form";
+import { Input, Label, InputText } from "r3f-form";
 import { usePlayerAnimations } from "./contexts/playerAnimations"
 
 export default function PlayGame(props)
@@ -476,15 +476,12 @@ export default function PlayGame(props)
                 </group>
             </Float>
 
-            {/* <Label position={[0,0,7]} scale={[5,5,5]}color="blue" text="Name"/>
-            <Input /> */}
-
             <Float
                 rotationIntensity={0.3}   
                 floatIntensity={0.3}
                 speed={1}
             >
-                <group position={[3.2,-1.5,0]} rotation={[0,-0.3,-0.1]} ref={groupRef2}>
+                <group position={[3.2,-1.5,-99999]} rotation={[0,-0.3,-0.1]} ref={groupRef2}>
 
                     {/* Name and Room Boxes*/}
 
