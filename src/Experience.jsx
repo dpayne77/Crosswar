@@ -1,4 +1,4 @@
-import { OrbitControls, Text, Html, ContactShadows, PresentationControls, Float, Environment, useGLTF } from '@react-three/drei'
+import { Text, Html, ContactShadows, PresentationControls, Float, Environment, useGLTF } from '@react-three/drei'
 import MainMenu from './MainMenu'
 
 export default function Experience()
@@ -9,11 +9,21 @@ export default function Experience()
     return <>
 
         <Environment preset="city" />
-        {/* <OrbitControls></OrbitControls> */}
 
         <color args = {['#241a1a']} attach="background" />
 
+        <PresentationControls
+            global
+            cursor={false}
+            polar={ [0,0] }
+            azimuth={ [-1, 0.7] }
+            config={ {mass: 2, tension: 400 } }
+            snap = { { mass: 4, tension: 400 } }
+        >
+
         <MainMenu/>
+
+        </PresentationControls>
         
         
         {/* <PresentationControls

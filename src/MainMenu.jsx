@@ -1,6 +1,5 @@
-import { OrbitControls, CameraControls, PerspectiveCamera, useTexture, Hud, Text, Html, ContactShadows, PresentationControls, Float, Environment, useGLTF } from '@react-three/drei'
-import { useLoader, useFrame, useThree } from '@react-three/fiber'
-import {TextureLoader } from 'three/src/loaders/TextureLoader'
+import { CameraControls, PerspectiveCamera, useTexture, Hud, Text, Float, useGLTF } from '@react-three/drei'
+import { useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three';
 import HowToPlay from './HowToPlay';
@@ -87,6 +86,12 @@ export default function MainMenu() {
 
 
     useEffect(() => {
+        cameraControlsRef.current.mouseButtons.left = 0
+        cameraControlsRef.current.mouseButtons.wheel = 0
+        cameraControlsRef.current.touches.one = 0
+        cameraControlsRef.current.touches.two = 0
+        cameraControlsRef.current.touches.three = 0
+
         cameraControlsRef.current.setPosition(-20,5,10, true)
         cameraControlsRef.current.setTarget(-10,10,-9, true)
     }, []);
