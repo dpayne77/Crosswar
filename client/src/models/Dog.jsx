@@ -54,7 +54,11 @@ export function Dog(props) {
       }
   
       return () => {
+        try {
           actions[names[animationIndex]].fadeOut(0.5);
+        }
+        catch (error) {
+        }
       }
     }, [animationIndex])
 

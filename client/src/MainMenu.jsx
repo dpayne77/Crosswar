@@ -12,7 +12,7 @@ import { Cat } from './models/Cat'
 import { Dog } from './models/Dog'
 
 
-export default function MainMenu() {
+export default function MainMenu(props) {
 
 
     const scene = useGLTF('./models/standFULL.glb')
@@ -404,6 +404,7 @@ export default function MainMenu() {
             cow={cow} 
             panda={panda}
             characterRefs={characterRefs}
+            joinRoom={props.joinRoom}
         />
         
     </>

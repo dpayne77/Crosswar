@@ -34,20 +34,16 @@ io.on("connection", (socket) => {
             }
         }
         
-        // if (io.sockets.clients(data.room)) {
-        //         let numPlayers = io.sockets.clients(data.room)
-        //         console.log("There are " + numPlayers + " in the room " +  data.room);
-        
-        // }
-        
+        io.to(data.id).emit("accept_player", data)
         socket.nickname = data.username;
         socket.join(data.room); // puts user in room
         roomSocket = data.room;
-        console.log("User with ID: " + socket.id + " and username: '" + data.username + "' joined room: '" + data.room + "'");
+        console.log("User with ID: " + socket.id + ", username: '" + data.username + "', and animalIndex: " + data.animalIndex +" joined room: '" + data.room + "'");
 
         const userInfo = {
             username: data.username,
             room: data.room,
+            animalIndex: data.animalIndex,
             id: data.id
         }
 

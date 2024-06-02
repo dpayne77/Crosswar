@@ -270,7 +270,9 @@ export default function PlayGame(props)
         if (props.playGame && okayClick) {
             if (name != "" && room != "") {
                 console.log("Join room now!")
+                
                 // socket
+                props.joinRoom(name, room, selectedAnimalClick)
             }
         }
     }

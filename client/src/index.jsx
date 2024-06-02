@@ -17,7 +17,7 @@ root.render( <>
             //     far: 2000,
             //     position: [ -2, 17, 26 ]
             // } }
-            // className='r3f'
+            className='r3f'
         >
             <PlayerAnimationsProvider>
                 <Suspense fallback={null}>
