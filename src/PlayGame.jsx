@@ -144,6 +144,8 @@ export default function PlayGame(props)
 
     const dogClick = () => {
         if (props.playGame) {
+            props.characterRefs[selectedAnimalClick - 1].current.visible = false;
+            props.characterRefs[1 - 1].current. visible = true;
             setSelectedAnimalClick(1);
         }
     }
@@ -156,6 +158,8 @@ export default function PlayGame(props)
 
     const catClick = () => {
         if (props.playGame) {
+            props.characterRefs[selectedAnimalClick - 1].current.visible = false;
+            props.characterRefs[2 - 1].current. visible = true;
             setSelectedAnimalClick(2);
         }
     }
@@ -168,6 +172,8 @@ export default function PlayGame(props)
 
     const skunkClick = () => {
         if (props.playGame) {
+            props.characterRefs[selectedAnimalClick - 1].current.visible = false;
+            props.characterRefs[3 - 1].current.visible = true;
             setSelectedAnimalClick(3);
         }
     }
@@ -180,6 +186,8 @@ export default function PlayGame(props)
 
     const cowClick = () => {
         if (props.playGame) {
+            props.characterRefs[selectedAnimalClick - 1].current.visible = false;
+            props.characterRefs[4 - 1].current.visible = true;
             setSelectedAnimalClick(4);
         }
     }
@@ -192,6 +200,8 @@ export default function PlayGame(props)
     
     const pandaClick = () => {
         if (props.playGame) {
+            props.characterRefs[selectedAnimalClick - 1].current.visible = false;
+            props.characterRefs[5 - 1].current.visible = true;
             setSelectedAnimalClick(5);
         }
     }

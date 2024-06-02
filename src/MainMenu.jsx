@@ -42,14 +42,22 @@ export default function MainMenu() {
     });
     const [cameraStart, setCameraStart] = useState(false);
 
-    //camera.position.copy(coords)
-
-    const stand = useRef();
-    const ball = useRef();
+    // Menu Refs
     const playGameRef = useRef();
     const selectionRef= useRef();
     const cameraControlsRef = useRef();
 
+    // Model Refs
+    const stand = useRef();
+    const dogRef = useRef();
+    const catRef = useRef();
+    const skunkRef = useRef();
+    const cowRef = useRef();
+    const pandaRef = useRef();
+
+    const characterRefs = [dogRef, catRef, skunkRef, cowRef, pandaRef]
+
+    // State
     const [playGameClick, setPlayGameClick] = useState(false);
     const [howToPlayClick, setHowToPlayClick] = useState(false);
     const [aboutMeClick, setAboutMeClick] = useState(false);
@@ -174,11 +182,26 @@ export default function MainMenu() {
 
     return <>
 
-        <Skunk position={[-16,-1,-12]} scale={[3,3,3]} rotation={[0,-1,0]}/>
-        <Cow position={[-16,-1,-5]} scale={[3,3,3]} visible={false}/>
-        <Panda position={[-16,-1,-5]} scale={[3,3,3]} visible={false}/>
-        <Cat position={[-16,-1,-5]} scale={[3,3,3]} visible={false}/>
-        <Dog position={[-16,-1,-5]} scale={[3,3,3]} visible={false}/>
+        <mesh position={[-16,-1,-12]} scale={[3,3,3]} rotation={[0,-1,0]} ref={dogRef} visible={false}>
+            <Dog />
+        </mesh>
+
+        <mesh position={[-16,-1,-12]} scale={[3,3,3]} rotation={[0,-1,0]} ref={catRef} visible={false}>
+            <Cat />
+        </mesh>
+
+        <mesh position={[-16,-1,-12]} scale={[3,3,3]} rotation={[0,-1,0]} ref={skunkRef} visible={true}>
+            <Skunk />
+        </mesh>
+
+        <mesh position={[-16,-1,-12]} scale={[3,3,3]} rotation={[0,-1,0]} ref={cowRef} visible={false}>
+            <Cow />
+        </mesh>
+
+        <mesh position={[-16,-1,-12]} scale={[3,3,3]} rotation={[0,-1,0]} ref={pandaRef} visible={false}>
+            <Panda />
+        </mesh>
+        
 
         <CameraControls ref={cameraControlsRef}/>
 
@@ -367,7 +390,16 @@ export default function MainMenu() {
             )
         }
 
-        <PlayGame playGame={playGameClick} terminate={playGameClickOff} dog={dog} cat={cat} skunk={skunk} cow={cow} panda={panda}/>
+        <PlayGame 
+            playGame={playGameClick} 
+            terminate={playGameClickOff} 
+            dog={dog} 
+            cat={cat} 
+            skunk={skunk} 
+            cow={cow} 
+            panda={panda}
+            characterRefs={characterRefs}
+        />
         
     </>
 }
