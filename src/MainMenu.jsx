@@ -7,6 +7,8 @@ import HowToPlay from './HowToPlay';
 import AboutMe from './AboutMe';
 import PlayGame from './PlayGame';
 import { Skunk } from './models/Skunk';
+import { Cow } from './models/Cow'
+import { Panda } from './models/Panda'
 
 
 export default function MainMenu() {
@@ -171,6 +173,8 @@ export default function MainMenu() {
     return <>
 
         <Skunk position={[-16,-1,-12]} scale={[3,3,3]} rotation={[0,-1,0]}/>
+        <Cow position={[-16,-1,-5]} scale={[3,3,3]} visible={false}/>
+        <Panda position={[-16,-1,-5]} scale={[3,3,3]} visible={false}/>
 
         <CameraControls ref={cameraControlsRef}/>
 
