@@ -58,3 +58,15 @@ body,
     font-family: Arsenal;
     src: url(./fonts/Arsenal-Bold.ttf);
   }
+
+  .usernameInner {
+    color:white;
+    font-family: Arsenal;
+    background: black;
+    font-size: 20px;
+    padding: 5px 10px;
+    opacity: 0.5;
+    /* border: 5px solid; */
+    border-radius: 25px;
+    /* border-image: url('./textures/persona_stars.jpg') 3% repeat */
+  }

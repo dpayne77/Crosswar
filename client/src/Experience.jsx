@@ -10,9 +10,9 @@ export default function Experience()
 {
 
     // Player Variables
-    const [playerUsername, setPlayerUsername] = useState("")
+    const [playerUsername, setPlayerUsername] = useState("David")
     const [playerAnimalIndex, setPlayerAnimalIndex] = useState(3)
-    const [playerRoom, setPlayerRoom] = useState("")
+    const [playerRoom, setPlayerRoom] = useState("123")
 
 
     // Home Screen Variables
@@ -48,7 +48,7 @@ export default function Experience()
     socket.off("accept_player").on("accept_player", (data) => { // Room is good to join!
         console.log("Join the room!")
 
-        setTimeout(() => setShowHomeScreen(false), 1000)
+        setTimeout(() => setShowHomeScreen(false), 500)
 
         //setShowHomeScreen(false);
     });
